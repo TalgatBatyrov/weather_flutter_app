@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:weather_flutter_app/widgets/home/weather_details/elements/weather_detail_items.dart';
 
 class WeatherDetails extends StatelessWidget {
   const WeatherDetails({Key? key}) : super(key: key);
@@ -12,22 +13,20 @@ class WeatherDetails extends StatelessWidget {
         child: ListView(
           children: const [
             _DetailsItem(),
-            ListTile(
-              leading: FaIcon(FontAwesomeIcons.cloud,
-                  color: Color.fromARGB(255, 126, 153, 175)),
-              title: Text('Weather'),
-              trailing: Text('Description'),
+            WeathetDetailItems(
+              color: Color.fromARGB(255, 126, 153, 175),
+              description: '${0}',
+              title: 'Temperature',
             ),
-            ListTile(
-              leading: FaIcon(FontAwesomeIcons.sun,
-                  color: Color.fromARGB(255, 191, 177, 54)),
-              title: Text('Humidity'),
-              trailing: Text('${0}%'),
+            WeathetDetailItems(
+              color: Color.fromARGB(255, 191, 177, 54),
+              description: '${0}',
+              title: 'Humidity',
             ),
-            ListTile(
-              leading: FaIcon(FontAwesomeIcons.wind, color: Colors.grey),
-              title: Text('Wind Speed'),
-              trailing: Text('${0} m/s'),
+            WeathetDetailItems(
+              color: Colors.grey,
+              description: '${0} m/s',
+              title: 'Wind Speed',
             ),
           ],
         ),
