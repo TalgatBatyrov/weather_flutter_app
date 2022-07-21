@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_flutter_app/widgets/home.dart';
+import 'package:weather_flutter_app/widgets/home/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
