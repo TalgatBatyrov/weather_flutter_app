@@ -11,11 +11,7 @@ class WeatherDetails extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: const [
-            ListTile(
-              leading: FaIcon(FontAwesomeIcons.thermometer, color: Colors.blue),
-              title: Text('Temperature'),
-              trailing: Text(' ${0}\u00B0'),
-            ),
+            _DetailsItem(),
             ListTile(
               leading: FaIcon(FontAwesomeIcons.cloud,
                   color: Color.fromARGB(255, 126, 153, 175)),
@@ -36,6 +32,21 @@ class WeatherDetails extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _DetailsItem extends StatelessWidget {
+  const _DetailsItem({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const ListTile(
+      leading: FaIcon(FontAwesomeIcons.thermometer, color: Colors.blue),
+      title: Text('Temperature'),
+      trailing: Text(' ${0}\u00B0'),
     );
   }
 }

@@ -8,9 +8,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Weather app'),
-      ),
+      appBar: AppBar(title: const Text('Weather app')),
       body: Column(
         children: const [
           WeatherInfo(),
