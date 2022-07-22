@@ -22,10 +22,9 @@ class WeatherInfo extends StatelessWidget {
         }
         if (state is WeatherErrorState) {
           return Center(
-            heightFactor: 30,
             child: Text(
               state.errorMessage,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
             ),
           );
         }

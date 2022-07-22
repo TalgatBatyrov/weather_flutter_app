@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_flutter_app/cubits/weather_cubit/weather_state.dart';
@@ -9,6 +10,7 @@ class WeatherCubit extends Cubit<WeatherState> {
     getWeather();
   }
   final _dio = Dio();
+  final controller = TextEditingController();
 
   Future<void> getWeather() async {
     try {
@@ -26,19 +28,25 @@ class WeatherCubit extends Cubit<WeatherState> {
   }
 
   Future<void> searchData(String query) async {
-    emit(WeatherLoadingState());
-    const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
-    var response = await _dio.get(
-      getWeatherUrl,
-      queryParameters: {
-        'q': query,
-        'appid': '18be0426cee1feabd45330eaddb3c3a0',
-        'units': 'metric'
-      },
-    );
-    final json = response.data;
-    final weather = Weather.fromJson(json);
-    emit(WeatherLoadedState(weather: weather));
+    try {
+      emit(WeatherLoadingState());
+      const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
+      var response = await _dio.get(
+        getWeatherUrl,
+        queryParameters: {
+          'q': query,
+          'appid': '18be0426cee1feabd45330eaddb3c3a0',
+          'units': 'metric'
+        },
+      );
+      final json = response.data;
+      final weather = Weather.fromJson(json);
+      emit(WeatherLoadedState(weather: weather));
+    } catch (e) {
+      emit(WeatherErrorState(
+          errorMessage:
+              'Не нашли такой город :( Возможно вы ошиблись  в названии'));
+    }
   }
 
   // Future<Position?> determinePosition() async {

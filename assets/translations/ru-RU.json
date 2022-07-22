@@ -1,3 +1,9 @@
 {
-
+    "weather_app_title": "Прогноз погоды",
+    "light_theme": "Светлая тема",
+    "temperature": "Температура",
+    "cloud": "Облако",
+    "sun": "Солнце",
+    "wind_speed": "Скорость ветра",
+    "search_by_city_name": "Искать по названию города"
 }

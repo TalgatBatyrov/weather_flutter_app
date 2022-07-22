@@ -1,3 +1,10 @@
 {
+    "weather_app_title": "Weather app",
+    "light_theme": "Light theme",
+    "temperature": "Temperature",
+    "cloud": "Cloud",
+    "sun": "Sun",
+    "wind_speed": "Wind speed",
+    "search_by_city_name": "Search by city name"
 
 }

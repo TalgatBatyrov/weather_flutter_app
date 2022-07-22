@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,25 +24,25 @@ class WeatherDetails extends StatelessWidget {
                     icon: FontAwesomeIcons.thermometer,
                     color: Colors.blue,
                     description: '${weather.temperature}\u00B0',
-                    title: 'Temperature',
+                    title: tr('temperature'),
                   ),
                   WeathetDetailItems(
                     icon: FontAwesomeIcons.cloud,
                     color: const Color.fromARGB(255, 83, 142, 191),
                     description: weather.condition.toLowerCase(),
-                    title: 'Cloud',
+                    title: tr('cloud'),
                   ),
                   WeathetDetailItems(
                     icon: FontAwesomeIcons.sun,
                     color: const Color.fromARGB(255, 191, 177, 54),
                     description: weather.description,
-                    title: 'Sun',
+                    title: tr('sun'),
                   ),
                   WeathetDetailItems(
                     icon: FontAwesomeIcons.wind,
                     color: const Color.fromARGB(255, 136, 136, 132),
                     description: '${weather.windSpeed.round()} m/s',
-                    title: 'Wind speed',
+                    title: tr('wind_speed'),
                   ),
                 ],
               ),
