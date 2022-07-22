@@ -25,6 +25,40 @@ class WeatherCubit extends Cubit<WeatherState> {
     }
   }
 
+  Future<void> searchData(String query) async {
+    emit(WeatherLoadingState());
+    const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
+    var response = await _dio.get(
+      getWeatherUrl,
+      queryParameters: {
+        'q': query,
+        'appid': '18be0426cee1feabd45330eaddb3c3a0',
+        'units': 'metric'
+      },
+    );
+    final json = response.data;
+    final weather = Weather.fromJson(json);
+    emit(WeatherLoadedState(weather: weather));
+  }
+
+  // Future<Position?> determinePosition() async {
+  //   LocationPermission permission;
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.deniedForever) {
+  //       return Future.error('Location Not Available');
+  //     }
+  //   } else {
+  //     throw Exception('Error');
+  //   }
+  //   return await Geolocator.getCurrentPosition();
+  // }
+
+  // Future<Position?> _getCurrentPosition() async {
+  //   return await determinePosition();
+  // }
+
   Future<Position?> _getCurrentPosition() async {
     return await Geolocator.getCurrentPosition(
       timeLimit: const Duration(seconds: 20),
@@ -42,7 +76,7 @@ class WeatherCubit extends Cubit<WeatherState> {
         'units': 'metric'
       },
     );
-    final data = response.data;
-    return Weather.fromJson(data);
+    final json = response.data;
+    return Weather.fromJson(json);
   }
 }

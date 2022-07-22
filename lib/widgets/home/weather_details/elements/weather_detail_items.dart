@@ -19,7 +19,10 @@ class WeathetDetailItems extends StatelessWidget {
     return ListTile(
       leading: FaIcon(icon, color: color),
       title: Text(title),
-      trailing: Text(description),
+      trailing: Text(
+        description,
+        style: const TextStyle(fontSize: 18),
+      ),
     );
   }
 }

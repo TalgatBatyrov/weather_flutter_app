@@ -22,13 +22,19 @@ class WeatherInfo extends StatelessWidget {
         }
         if (state is WeatherErrorState) {
           return Center(
-            child: Text(state.errorMessage),
+            heightFactor: 30,
+            child: Text(
+              state.errorMessage,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           );
         }
         if (state is WeatherLoadedState) {
           final weather = state.weather;
           return Container(
-            color: const Color.fromARGB(255, 103, 170, 188),
+            color: weather.temperature > 25
+                ? const Color.fromARGB(255, 216, 202, 74)
+                : const Color.fromARGB(255, 103, 170, 188),
             height: MediaQuery.of(context).size.height / 3,
             width: MediaQuery.of(context).size.width,
             child: Column(

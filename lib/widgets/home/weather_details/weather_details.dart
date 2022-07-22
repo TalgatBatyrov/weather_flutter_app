@@ -28,7 +28,7 @@ class WeatherDetails extends StatelessWidget {
                   WeathetDetailItems(
                     icon: FontAwesomeIcons.cloud,
                     color: const Color.fromARGB(255, 83, 142, 191),
-                    description: weather.condition,
+                    description: weather.condition.toLowerCase(),
                     title: 'Cloud',
                   ),
                   WeathetDetailItems(
