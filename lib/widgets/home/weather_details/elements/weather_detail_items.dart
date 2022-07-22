@@ -5,17 +5,19 @@ class WeathetDetailItems extends StatelessWidget {
   final Color color;
   final String title;
   final String description;
+  final IconData icon;
   const WeathetDetailItems({
     Key? key,
     required this.color,
     required this.title,
     required this.description,
+    required this.icon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: FaIcon(FontAwesomeIcons.cloud, color: color),
+      leading: FaIcon(icon, color: color),
       title: Text(title),
       trailing: Text(description),
     );

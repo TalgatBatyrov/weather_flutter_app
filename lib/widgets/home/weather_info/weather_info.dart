@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_flutter_app/cubits/weather_cubit/weather_cubit.dart';
+import 'package:weather_flutter_app/cubits/weather_cubit/weather_state.dart';
 import 'package:weather_flutter_app/widgets/home/weather_info/elements/weather_info_label.dart';
 
 class WeatherInfo extends StatelessWidget {
@@ -6,18 +9,43 @@ class WeatherInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color.fromARGB(255, 103, 170, 188),
-      height: MediaQuery.of(context).size.height / 3,
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          WeatherInfoLabel(title: 'Bishkek'),
-          WeatherInfoLabel(title: '40'),
-          WeatherInfoLabel(title: 'Suny', fontSize: 20),
-        ],
-      ),
+    return BlocBuilder<WeatherCubit, WeatherState>(
+      builder: (context, state) {
+        if (state is WeatherLoadingState) {
+          return Container(
+            color: const Color.fromARGB(255, 103, 170, 188),
+            height: MediaQuery.of(context).size.height / 3,
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        if (state is WeatherErrorState) {
+          return Center(
+            child: Text(state.errorMessage),
+          );
+        }
+        if (state is WeatherLoadedState) {
+          final weather = state.weather;
+          return Container(
+            color: const Color.fromARGB(255, 103, 170, 188),
+            height: MediaQuery.of(context).size.height / 3,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                WeatherInfoLabel(title: weather.name),
+                WeatherInfoLabel(title: '${weather.temperature}\u00B0'),
+                WeatherInfoLabel(
+                  title: weather.description,
+                  fontSize: 20,
+                ),
+              ],
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }

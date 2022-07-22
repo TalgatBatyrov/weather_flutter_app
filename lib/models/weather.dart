@@ -4,6 +4,7 @@ class Weather {
   num feelsLike;
   num pressure;
   num visibility;
+  String description;
   String humidity;
   num windSpeed;
   String country;
@@ -11,6 +12,7 @@ class Weather {
   String icon;
 
   Weather({
+    required this.description,
     required this.condition,
     required this.temperature,
     required this.feelsLike,
@@ -25,6 +27,7 @@ class Weather {
 
   factory Weather.fromJson(Map<String, dynamic> json) {
     return Weather(
+      description: json['weather'][0]['description'],
       condition: json['weather'][0]['main'],
       temperature: (json['main']['temp']).round(),
       feelsLike: (json['main']['feels_like']).round(),

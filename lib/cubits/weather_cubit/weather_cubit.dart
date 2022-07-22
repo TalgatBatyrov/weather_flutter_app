@@ -1,12 +1,13 @@
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_flutter_app/cubits/weather_cubit/weather_state.dart';
 import 'package:weather_flutter_app/models/weather.dart';
 
 class WeatherCubit extends Cubit<WeatherState> {
-  WeatherCubit() : super(WeatherLoadingState());
+  WeatherCubit() : super(WeatherLoadingState()) {
+    getWeather();
+  }
   final _dio = Dio();
 
   Future<void> getWeather() async {
@@ -17,12 +18,9 @@ class WeatherCubit extends Cubit<WeatherState> {
         final weather = await _fetchWeather(position);
         emit(WeatherLoadedState(weather: weather));
       }
-      if (kDebugMode) {
-        print(position.toString());
-      }
     } catch (e) {
       emit(WeatherErrorState(
-        errorMessage: e.toString(),
+        errorMessage: 'Произошла ошибка, повторите еще раз',
       ));
     }
   }
@@ -40,7 +38,8 @@ class WeatherCubit extends Cubit<WeatherState> {
       queryParameters: {
         'lat': position.latitude,
         'lon': position.longitude,
-        'appid': '18be0426cee1feabd45330eaddb3c3a0'
+        'appid': '18be0426cee1feabd45330eaddb3c3a0',
+        'units': 'metric'
       },
     );
     final data = response.data;
