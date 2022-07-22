@@ -1,7 +1,17 @@
+import 'package:weather_flutter_app/models/weather.dart';
+
 abstract class WeatherState {}
 
-class WeatherEmpty extends WeatherState {}
+class WeatherEmptyState extends WeatherState {}
 
-class WeatherLoading extends WeatherState {}
+class WeatherLoadingState extends WeatherState {}
 
-class WeatherLoadedState extends WeatherState {}
+class WeatherLoadedState extends WeatherState {
+  Weather weather;
+  WeatherLoadedState({required this.weather});
+}
+
+class WeatherErrorState extends WeatherState {
+  String errorMessage;
+  WeatherErrorState({required this.errorMessage});
+}
