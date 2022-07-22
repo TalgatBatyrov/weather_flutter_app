@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_flutter_app/widgets/home/weather_info/elements/weather_Info_label.dart';
+import 'package:weather_flutter_app/widgets/home/weather_info/elements/weather_info_label.dart';
 
 class WeatherInfo extends StatelessWidget {
   const WeatherInfo({Key? key}) : super(key: key);
