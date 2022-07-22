@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -22,7 +23,7 @@ class WeatherCubit extends Cubit<WeatherState> {
       }
     } catch (e) {
       emit(WeatherErrorState(
-        errorMessage: 'Произошла ошибка, повторите еще раз',
+        errorMessage: tr('get_weather_error'),
       ));
     }
   }
@@ -43,9 +44,7 @@ class WeatherCubit extends Cubit<WeatherState> {
       final weather = Weather.fromJson(json);
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
-      emit(WeatherErrorState(
-          errorMessage:
-              'Не нашли такой город :( Возможно вы ошиблись  в названии'));
+      emit(WeatherErrorState(errorMessage: tr('search_weather_error')));
     }
   }
 
