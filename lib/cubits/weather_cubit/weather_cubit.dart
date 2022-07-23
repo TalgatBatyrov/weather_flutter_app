@@ -17,10 +17,8 @@ class WeatherCubit extends Cubit<WeatherState> {
     try {
       emit(WeatherLoadingState());
       final position = await _getCurrentPosition();
-      if (position != null) {
-        final weather = await _fetchWeather(position);
-        emit(WeatherLoadedState(weather: weather));
-      }
+      final weather = await _getWeatherInMyCity(position);
+      emit(WeatherLoadedState(weather: weather));
     } catch (e) {
       emit(WeatherErrorState(
         errorMessage: tr('get_weather_error'),
@@ -48,31 +46,27 @@ class WeatherCubit extends Cubit<WeatherState> {
     }
   }
 
-  // Future<Position?> determinePosition() async {
-  //   LocationPermission permission;
-  //   permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //     if (permission == LocationPermission.deniedForever) {
-  //       return Future.error('Location Not Available');
-  //     }
-  //   } else {
-  //     throw Exception('Error');
-  //   }
-  //   return await Geolocator.getCurrentPosition();
-  // }
+  Future<Position> _getCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-  // Future<Position?> _getCurrentPosition() async {
-  //   return await determinePosition();
-  // }
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.whileInUse) {
+        permission = await Geolocator.requestPermission();
+      } else {
+        return Future.error(
+          'Чтобы определить погоду в Вашем городе включите геоданные и нажмите на кнопку (Погода в вашем городе)',
+        );
+      }
+    }
 
-  Future<Position?> _getCurrentPosition() async {
-    return await Geolocator.getCurrentPosition(
-      timeLimit: const Duration(seconds: 20),
-    );
+    return await Geolocator.getCurrentPosition();
   }
 
-  Future<Weather> _fetchWeather(Position position) async {
+  Future<Weather> _getWeatherInMyCity(Position position) async {
     const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
     var response = await _dio.get(
       getWeatherUrl,
