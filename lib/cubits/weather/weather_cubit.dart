@@ -5,16 +5,14 @@ import 'package:weather_flutter_app/cubits/weather/weather_state.dart';
 import 'package:weather_flutter_app/models/weather.dart';
 
 class WeatherCubit extends Cubit<WeatherState> {
-  WeatherCubit() : super(WeatherLoadingState()) {
-    getWeather();
-  }
+  WeatherCubit() : super(WeatherLoadingState());
   final _dio = Dio();
 
-  Future<void> getWeather() async {
+  Future<void> getWeather(String locale) async {
     try {
       emit(WeatherLoadingState());
       final position = await _getCurrentPosition();
-      final weather = await _getWeatherInMyCity(position);
+      final weather = await _getWeatherInMyCity(position, locale);
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
       emit(WeatherErrorState(
@@ -74,12 +72,12 @@ class WeatherCubit extends Cubit<WeatherState> {
         timeLimit: const Duration(seconds: 20));
   }
 
-  Future<Weather> _getWeatherInMyCity(Position position) async {
+  Future<Weather> _getWeatherInMyCity(Position position, String locale) async {
     const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
     var response = await _dio.get(
       getWeatherUrl,
       queryParameters: {
-        'lang': 'ru',
+        'lang': locale,
         'lat': position.latitude,
         'lon': position.longitude,
         'appid': '18be0426cee1feabd45330eaddb3c3a0',

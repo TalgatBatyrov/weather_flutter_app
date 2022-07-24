@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_flutter_app/cubits/theme/theme_cubit.dart';
-import 'package:weather_flutter_app/widgets/home/weather_in_my_country/wether_in_my_city.dart';
+import 'package:weather_flutter_app/widgets/home/weather_in_my_city/wether_in_my_city.dart';
 
 class AppBarActions extends StatelessWidget {
   const AppBarActions({Key? key}) : super(key: key);

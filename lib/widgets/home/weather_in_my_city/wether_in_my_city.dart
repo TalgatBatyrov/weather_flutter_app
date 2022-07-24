@@ -11,7 +11,7 @@ class WeatherInMyCity extends StatelessWidget {
     context.locale;
     final weatherCubit = context.read<WeatherCubit>();
     return GestureDetector(
-      onTap: weatherCubit.getWeather,
+      onTap: () => weatherCubit.getWeather(tr('locale')),
       child: const Icon(Icons.location_on),
     );
   }

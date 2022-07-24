@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     context.locale;
     return BlocProvider(
-      create: (_) => WeatherCubit(),
+      create: (_) => WeatherCubit()..getWeather(tr('locale')),
       child: Scaffold(
         appBar: AppBar(
           actions: const [AppBarActions()],
