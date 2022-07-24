@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -16,18 +17,13 @@ class WeathetDetailItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle style =
-        TextStyle(fontSize: 18, fontStyle: FontStyle.italic);
+    context.locale;
+    TextStyle style = const TextStyle(
+        fontSize: 18, fontFamily: 'SF Pro Text', color: Colors.white);
 
     return ListTile(
         leading: FaIcon(icon, color: color),
-        title: Text(
-          title,
-          style: style,
-        ),
-        trailing: Text(
-          description,
-          style: style,
-        ));
+        title: Text(title, style: style),
+        trailing: Text(description, style: style));
   }
 }

@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,7 +20,7 @@ class WeatherCubit extends Cubit<WeatherState> {
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
       emit(WeatherErrorState(
-        errorMessage: tr('get_weather_error'),
+        errorMessage: e.toString(),
       ));
     }
   }
@@ -50,22 +49,31 @@ class WeatherCubit extends Cubit<WeatherState> {
   Future<Position> _getCurrentPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
+    const locationErrorMessage = 'get_weather_error';
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
     if (!serviceEnabled) {
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.whileInUse) {
-        permission = await Geolocator.requestPermission();
-      } else {
-        // return Future.error(
-        //   'Чтобы определить погоду в Вашем городе включите геоданные и нажмите на кнопку (Погода в вашем городе)',
-        // );
-        await Geolocator.requestPermission();
-      }
+      return Future.error(locationErrorMessage);
     }
 
-    return await Geolocator.getCurrentPosition();
+    permission = await Geolocator.checkPermission();
+    final isDeniedForever = permission == LocationPermission.deniedForever;
+    if (isDeniedForever) {
+      return Future.error(locationErrorMessage);
+    }
+
+    final isDenied = permission == LocationPermission.denied;
+    if (isDenied) {
+      permission = await Geolocator.requestPermission();
+    }
+    final isDeniedAgain = permission == LocationPermission.denied;
+    if (isDeniedAgain) {
+      return Future.error(locationErrorMessage);
+    }
+
+    return await Geolocator.getCurrentPosition(
+        timeLimit: const Duration(seconds: 20));
   }
 
   Future<Weather> _getWeatherInMyCity(Position position) async {

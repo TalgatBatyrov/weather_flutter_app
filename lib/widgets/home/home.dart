@@ -24,6 +24,7 @@ class Home extends StatelessWidget {
           children: const [
             SearchWeather(),
             WeatherInfo(),
+            SizedBox(height: 10),
             WeatherDetails(),
           ],
         ),

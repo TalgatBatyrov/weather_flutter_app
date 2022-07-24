@@ -17,35 +17,42 @@ class WeatherDetails extends StatelessWidget {
         if (state is WeatherLoadedState) {
           final weather = state.weather;
           return Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: ListView(
-                children: [
-                  WeathetDetailItems(
-                    icon: FontAwesomeIcons.thermometer,
-                    color: Colors.blue,
-                    description: '${weather.temperature}\u00B0',
-                    title: tr('temperature'),
-                  ),
-                  WeathetDetailItems(
-                    icon: FontAwesomeIcons.cloud,
-                    color: const Color.fromARGB(255, 83, 142, 191),
-                    description: weather.condition.toLowerCase(),
-                    title: tr('cloud'),
-                  ),
-                  WeathetDetailItems(
-                    icon: FontAwesomeIcons.sun,
-                    color: const Color.fromARGB(255, 191, 177, 54),
-                    description: weather.description,
-                    title: tr('sun'),
-                  ),
-                  WeathetDetailItems(
-                    icon: FontAwesomeIcons.wind,
-                    color: const Color.fromARGB(255, 136, 136, 132),
-                    description: '${weather.windSpeed.round()} m/s',
-                    title: tr('wind_speed'),
-                  ),
-                ],
+            child: Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40)),
+                  color: Color.fromARGB(255, 59, 60, 60)),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: ListView(
+                  children: [
+                    WeathetDetailItems(
+                      icon: FontAwesomeIcons.thermometer,
+                      color: Colors.blue,
+                      description: '${weather.temperature}\u00B0',
+                      title: tr('temperature'),
+                    ),
+                    WeathetDetailItems(
+                      icon: FontAwesomeIcons.cloud,
+                      color: const Color.fromARGB(255, 83, 142, 191),
+                      description: weather.condition.toLowerCase(),
+                      title: tr('cloud'),
+                    ),
+                    WeathetDetailItems(
+                      icon: FontAwesomeIcons.sun,
+                      color: const Color.fromARGB(255, 191, 177, 54),
+                      description: weather.description,
+                      title: tr('sun'),
+                    ),
+                    WeathetDetailItems(
+                      icon: FontAwesomeIcons.wind,
+                      color: const Color.fromARGB(255, 136, 136, 132),
+                      description: '${weather.windSpeed.round()} m/s',
+                      title: tr('wind_speed'),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

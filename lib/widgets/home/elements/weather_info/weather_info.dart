@@ -37,10 +37,13 @@ class WeatherInfo extends StatelessWidget {
           final themeCubit = context.watch<ThemeCubit>();
           return Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: themeCubit.isLight
-                    ? const Color.fromARGB(223, 104, 155, 189)
-                    : const Color.fromARGB(255, 59, 60, 60)),
+              borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  bottomRight: Radius.circular(40)),
+              color: themeCubit.isLight
+                  ? const Color.fromARGB(223, 53, 138, 196)
+                  : const Color.fromARGB(255, 59, 60, 60),
+            ),
             height: MediaQuery.of(context).size.height / 3,
             width: MediaQuery.of(context).size.width,
             child: Column(

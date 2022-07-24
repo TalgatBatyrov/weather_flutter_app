@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_flutter_app/resources/theme_modes.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:weather_flutter_app/cubits/theme/theme_state.dart';
 
@@ -24,51 +25,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // }
 
 class ThemeCubit extends Cubit<ThemeData> {
-  ThemeCubit() : super(ThemeData.light());
+  ThemeCubit() : super(ThemeModes().darkMode);
 
   bool get isLight => state.brightness == Brightness.light;
 
   void toggle() {
     if (isLight) {
-      emit(
-        ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.lightBlue[800],
-          primarySwatch: Colors.blueGrey,
-          fontFamily: 'Georgia',
-          textTheme: const TextTheme(
-            headline1: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SF Pro Text'),
-            headline6: TextStyle(
-                fontSize: 16.0,
-                fontStyle: FontStyle.normal,
-                fontFamily: 'SF Pro Text'),
-            bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'SF Pro Text'),
-          ),
-        ),
-      );
+      emit(ThemeModes().darkMode);
     } else {
-      emit(
-        ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.lightBlue[800],
-          primarySwatch: Colors.blueGrey,
-          fontFamily: 'Georgia',
-          textTheme: const TextTheme(
-            headline1: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SF Pro Text'),
-            headline6: TextStyle(
-                fontSize: 16.0,
-                fontStyle: FontStyle.normal,
-                fontFamily: 'SF Pro Text'),
-            bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'SF Pro Text'),
-          ),
-        ),
-      );
+      emit(ThemeModes().lightMode);
     }
   }
 }

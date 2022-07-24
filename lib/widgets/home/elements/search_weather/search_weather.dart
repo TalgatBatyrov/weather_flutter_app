@@ -11,24 +11,31 @@ class SearchWeather extends StatelessWidget {
   Widget build(BuildContext context) {
     context.locale;
     final weatherCubit = context.read<WeatherCubit>();
-    final lightTheme = context.watch<ThemeCubit>();
-    return TextField(
-      controller: weatherCubit.controller,
-      onEditingComplete: () {
-        weatherCubit.searchData(
-            weatherCubit.controller.text.toLowerCase(), tr('locale'));
-      },
-      style: TextStyle(
-        color: lightTheme.isLight
-            ? const Color.fromARGB(179, 56, 38, 38)
-            : Colors.white,
-        fontSize: 18,
-        fontStyle: FontStyle.italic,
-      ),
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search),
-        hintText: tr('search_by_city_name'),
-        border: const OutlineInputBorder(borderSide: BorderSide.none),
+    final themeCubit = context.watch<ThemeCubit>();
+    return Container(
+      color: themeCubit.isLight
+          ? const Color.fromARGB(223, 53, 138, 196)
+          : const Color.fromARGB(255, 59, 60, 60),
+      child: TextField(
+        controller: weatherCubit.controller,
+        onEditingComplete: () {
+          weatherCubit.searchData(
+              weatherCubit.controller.text.toLowerCase(), tr('locale'));
+        },
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontStyle: FontStyle.italic,
+        ),
+        decoration: InputDecoration(
+          prefixIcon: const Icon(
+            Icons.search,
+            color: Colors.white,
+          ),
+          hintText: tr('search_by_city_name'),
+          hintStyle: const TextStyle(color: Colors.white),
+          border: const OutlineInputBorder(borderSide: BorderSide.none),
+        ),
       ),
     );
   }
