@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_flutter_app/cubits/theme/theme_cubit.dart';
 import 'package:weather_flutter_app/widgets/home/home.dart';
@@ -7,6 +8,7 @@ import 'package:weather_flutter_app/widgets/home/home.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
     EasyLocalization(
@@ -40,6 +42,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     context.locale;
     return BlocProvider.value(
       value: _themeCubit,
