@@ -22,7 +22,7 @@ class WeatherInfo extends StatelessWidget {
         }
         if (state is WeatherErrorState) {
           return Padding(
-            padding: const EdgeInsets.only(left: 16),
+            padding: const EdgeInsets.all(20),
             child: Center(
               child: Text(
                 tr(state.errorMessage),
