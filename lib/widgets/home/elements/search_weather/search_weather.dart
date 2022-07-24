@@ -2,25 +2,26 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_flutter_app/cubits/theme/theme_cubit.dart';
-import 'package:weather_flutter_app/cubits/weather_cubit/weather_cubit.dart';
+import 'package:weather_flutter_app/cubits/weather/weather_cubit.dart';
 
 class SearchWeather extends StatelessWidget {
   const SearchWeather({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     final weatherCubit = context.read<WeatherCubit>();
-    final lightTheme = context.watch<ThemeCubit>().lightTheme;
+    final lightTheme = context.watch<ThemeCubit>();
     return TextField(
       controller: weatherCubit.controller,
       onEditingComplete: () {
         weatherCubit.searchData(
-          weatherCubit.controller.text.toLowerCase(),
-        );
+            weatherCubit.controller.text.toLowerCase(), tr('locale'));
       },
       style: TextStyle(
-        color:
-            lightTheme ? const Color.fromARGB(179, 56, 38, 38) : Colors.white,
+        color: lightTheme.isLight
+            ? const Color.fromARGB(179, 56, 38, 38)
+            : Colors.white,
         fontSize: 18,
         fontStyle: FontStyle.italic,
       ),

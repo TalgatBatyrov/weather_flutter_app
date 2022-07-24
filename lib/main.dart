@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_flutter_app/cubits/theme/theme_cubit.dart';
-import 'package:weather_flutter_app/cubits/theme/theme_state.dart';
 import 'package:weather_flutter_app/widgets/home/home.dart';
 
 void main() async {
@@ -41,40 +40,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     return BlocProvider.value(
       value: _themeCubit,
-      child: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (context, state) {
-          if (state is ThemeisChanged) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                brightness:
-                    _themeCubit.lightTheme ? Brightness.light : Brightness.dark,
-                primaryColor: Colors.lightBlue[800],
-                primarySwatch: Colors.blueGrey,
-                fontFamily: 'Georgia',
-                textTheme: const TextTheme(
-                  headline1: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'SF Pro Text'),
-                  headline6: TextStyle(
-                      fontSize: 16.0,
-                      fontStyle: FontStyle.normal,
-                      fontFamily: 'SF Pro Text'),
-                  bodyText2:
-                      TextStyle(fontSize: 14.0, fontFamily: 'SF Pro Text'),
-                ),
-              ),
-              home: const Home(),
-            );
-          }
-          return const SizedBox.shrink();
+      child: BlocBuilder<ThemeCubit, ThemeData>(
+        builder: (context, themeData) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            title: 'Flutter Demo',
+            theme: themeData,
+            home: const Home(),
+          );
         },
       ),
     );

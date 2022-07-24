@@ -2,15 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:weather_flutter_app/cubits/weather_cubit/weather_cubit.dart';
-import 'package:weather_flutter_app/cubits/weather_cubit/weather_state.dart';
-import 'package:weather_flutter_app/widgets/home/weather_details/elements/weather_detail_items.dart';
+import 'package:weather_flutter_app/cubits/weather/weather_cubit.dart';
+import 'package:weather_flutter_app/cubits/weather/weather_state.dart';
+import 'package:weather_flutter_app/widgets/home/elements/weather_details/elements/weather_detail_items.dart';
 
 class WeatherDetails extends StatelessWidget {
   const WeatherDetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     return BlocBuilder<WeatherCubit, WeatherState>(
       builder: (context, state) {
         if (state is WeatherLoadedState) {

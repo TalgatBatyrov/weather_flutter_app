@@ -8,6 +8,7 @@
     "search_by_city_name": "Search by city name",
     "get_weather_error": "An error occurred, please try again",
     "search_weather_error": "Didn't find such a city :( maybe you made a mistake in the name",
-    "weather_in_your_city": "Weather in your city"
+    "weather_in_your_city": "Weather in your city",
+    "locale": "en"
 
 }

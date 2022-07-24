@@ -16,13 +16,18 @@ class WeathetDetailItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const TextStyle style =
+        TextStyle(fontSize: 18, fontStyle: FontStyle.italic);
+
     return ListTile(
-      leading: FaIcon(icon, color: color),
-      title: Text(title),
-      trailing: Text(
-        description,
-        style: const TextStyle(fontSize: 18),
-      ),
-    );
+        leading: FaIcon(icon, color: color),
+        title: Text(
+          title,
+          style: style,
+        ),
+        trailing: Text(
+          description,
+          style: style,
+        ));
   }
 }

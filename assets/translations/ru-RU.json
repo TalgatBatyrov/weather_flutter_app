@@ -8,5 +8,6 @@
     "search_by_city_name": "Искать по названию города",
     "get_weather_error": "Произошла ошибка, повторите еще раз",
     "search_weather_error": "Не нашли такой город :( Возможно вы ошиблись в названии",
-    "weather_in_your_city": "Погода в вашем городе"
+    "weather_in_your_city": "Погода в вашем городе",
+    "locale": "ru"
 }

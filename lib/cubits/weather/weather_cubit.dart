@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:weather_flutter_app/cubits/weather_cubit/weather_state.dart';
+import 'package:weather_flutter_app/cubits/weather/weather_state.dart';
 import 'package:weather_flutter_app/models/weather.dart';
 
 class WeatherCubit extends Cubit<WeatherState> {
@@ -26,13 +26,14 @@ class WeatherCubit extends Cubit<WeatherState> {
     }
   }
 
-  Future<void> searchData(String query) async {
+  Future<void> searchData(String query, String locale) async {
     try {
       emit(WeatherLoadingState());
       const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
       var response = await _dio.get(
         getWeatherUrl,
         queryParameters: {
+          'lang': locale,
           'q': query,
           'appid': '18be0426cee1feabd45330eaddb3c3a0',
           'units': 'metric'
@@ -42,7 +43,7 @@ class WeatherCubit extends Cubit<WeatherState> {
       final weather = Weather.fromJson(json);
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
-      emit(WeatherErrorState(errorMessage: tr('search_weather_error')));
+      emit(WeatherErrorState(errorMessage: 'search_weather_error'));
     }
   }
 
@@ -57,9 +58,10 @@ class WeatherCubit extends Cubit<WeatherState> {
           permission == LocationPermission.whileInUse) {
         permission = await Geolocator.requestPermission();
       } else {
-        return Future.error(
-          'Чтобы определить погоду в Вашем городе включите геоданные и нажмите на кнопку (Погода в вашем городе)',
-        );
+        // return Future.error(
+        //   'Чтобы определить погоду в Вашем городе включите геоданные и нажмите на кнопку (Погода в вашем городе)',
+        // );
+        await Geolocator.requestPermission();
       }
     }
 
@@ -71,6 +73,7 @@ class WeatherCubit extends Cubit<WeatherState> {
     var response = await _dio.get(
       getWeatherUrl,
       queryParameters: {
+        'lang': 'ru',
         'lat': position.latitude,
         'lon': position.longitude,
         'appid': '18be0426cee1feabd45330eaddb3c3a0',

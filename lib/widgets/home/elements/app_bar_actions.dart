@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_flutter_app/cubits/theme/theme_cubit.dart';
+import 'package:weather_flutter_app/widgets/home/weather_in_my_country/wether_in_my_city.dart';
 
 class AppBarActions extends StatelessWidget {
   const AppBarActions({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class AppBarActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeCubit = context.watch<ThemeCubit>();
-    final lightTheme = themeCubit.lightTheme;
+
     void locale(String languageSubtype, String countrySubtype) {
       context.setLocale(Locale(languageSubtype, countrySubtype));
       Navigator.of(context).pop();
@@ -17,21 +18,17 @@ class AppBarActions extends StatelessWidget {
 
     return Row(
       children: [
+        const WeatherInMyCity(),
+        const SizedBox(width: 20),
         GestureDetector(
           onTap: () {
             showDialog(
               context: context,
               builder: (ctx) {
-                ButtonStyle buttonStyle = ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all(
-                      const Color.fromARGB(255, 41, 164, 172)),
-                );
                 return AlertDialog(
-                  backgroundColor: const Color.fromARGB(177, 48, 46, 46),
-                  actionsAlignment: MainAxisAlignment.end,
+                  backgroundColor: Colors.white,
                   actions: [
                     TextButton(
-                      style: buttonStyle,
                       onPressed: () => locale('ru', 'RU'),
                       child: const Text(
                         'Русский',
@@ -40,13 +37,11 @@ class AppBarActions extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     TextButton(
-                      style: buttonStyle,
                       onPressed: () => locale('ky', 'KG'),
                       child: const Text('Кыргызча'),
                     ),
                     const SizedBox(height: 10),
                     TextButton(
-                      style: buttonStyle,
                       onPressed: () => locale('en', 'US'),
                       child: const Text('English'),
                     ),
@@ -55,32 +50,15 @@ class AppBarActions extends StatelessWidget {
               },
             );
           },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: const [
-                Icon(
-                  Icons.language,
-                  color: Colors.blue,
-                ),
-                SizedBox(width: 10),
-              ],
-            ),
-          ),
-        ),
-        Text(
-          tr('light_theme'),
-          style: const TextStyle(
-            color: Color.fromARGB(255, 230, 206, 206),
-            fontFamily: 'SF Pro Text',
-          ),
+          child: const Icon(Icons.language),
         ),
         const SizedBox(width: 10),
-        Switch(
-          activeColor: Colors.blue[200],
-          value: lightTheme,
-          onChanged: (_) => themeCubit.themeChanged(),
-        ),
+        IconButton(
+          onPressed: themeCubit.toggle,
+          icon: Icon(
+            themeCubit.isLight ? Icons.light_mode : Icons.dark_mode,
+          ),
+        )
       ],
     );
   }
