@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_flutter_app/cubits/weather/weather_state.dart';
@@ -10,7 +9,6 @@ class WeatherCubit extends Cubit<WeatherState> {
     getWeather();
   }
   final _dio = Dio();
-  final controller = TextEditingController();
 
   Future<void> getWeather() async {
     try {

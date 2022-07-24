@@ -15,7 +15,9 @@ class WeatherInfo extends StatelessWidget {
     return BlocBuilder<WeatherCubit, WeatherState>(
       builder: (context, state) {
         if (state is WeatherLoadingState) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
         if (state is WeatherErrorState) {
           return Padding(

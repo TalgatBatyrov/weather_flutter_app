@@ -12,15 +12,19 @@ class SearchWeather extends StatelessWidget {
     context.locale;
     final weatherCubit = context.read<WeatherCubit>();
     final themeCubit = context.watch<ThemeCubit>();
+    final inputController = TextEditingController();
     return Container(
       color: themeCubit.isLight
           ? const Color.fromARGB(223, 53, 138, 196)
           : const Color.fromARGB(255, 59, 60, 60),
       child: TextField(
-        controller: weatherCubit.controller,
+        controller: inputController,
         onEditingComplete: () {
           weatherCubit.searchData(
-              weatherCubit.controller.text.toLowerCase(), tr('locale'));
+            inputController.text.toLowerCase(),
+            tr('locale'),
+          );
+          inputController.text = '';
         },
         style: const TextStyle(
           color: Colors.white,
