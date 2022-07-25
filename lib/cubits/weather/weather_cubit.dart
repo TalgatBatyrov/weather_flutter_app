@@ -73,18 +73,22 @@ class WeatherCubit extends Cubit<WeatherState> {
   }
 
   Future<Weather> _getWeatherInMyCity(Position position, String locale) async {
-    const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
-    var response = await _dio.get(
-      getWeatherUrl,
-      queryParameters: {
-        'lang': locale,
-        'lat': position.latitude,
-        'lon': position.longitude,
-        'appid': '18be0426cee1feabd45330eaddb3c3a0',
-        'units': 'metric'
-      },
-    );
-    final json = response.data;
-    return Weather.fromJson(json);
+    try {
+      const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
+      var response = await _dio.get(
+        getWeatherUrl,
+        queryParameters: {
+          'lang': locale,
+          'lat': position.latitude,
+          'lon': position.longitude,
+          'appid': '18be0426cee1feabd45330eaddb3c3a0',
+          'units': 'metric'
+        },
+      );
+      final json = response.data;
+      return Weather.fromJson(json);
+    } catch (e) {
+      return Future.error('get_weather_error');
+    }
   }
 }

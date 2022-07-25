@@ -10,7 +10,6 @@ class AppBarActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeCubit = context.watch<ThemeCubit>();
-
     void locale(String languageSubtype, String countrySubtype) {
       context.setLocale(Locale(languageSubtype, countrySubtype));
       Navigator.of(context).pop();
