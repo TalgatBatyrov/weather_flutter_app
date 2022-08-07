@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:weather_flutter_app/cubits/weather/weather_state.dart';
 import 'package:weather_flutter_app/models/weather.dart';
+import 'package:weather_flutter_app/services/weather_api.dart';
 
 class WeatherCubit extends Cubit<WeatherState> {
   WeatherCubit() : super(WeatherLoadingState());
@@ -11,8 +11,8 @@ class WeatherCubit extends Cubit<WeatherState> {
   Future<void> getWeather(String locale) async {
     try {
       emit(WeatherLoadingState());
-      final position = await _getCurrentPosition();
-      final weather = await _getWeatherInMyCity(position, locale);
+      final position = await WeatherApi().getCurrentPosition();
+      final weather = await WeatherApi().getWeatherInMyCity(position, locale);
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
       emit(WeatherErrorState(
@@ -39,56 +39,6 @@ class WeatherCubit extends Cubit<WeatherState> {
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
       emit(WeatherErrorState(errorMessage: 'search_weather_error'));
-    }
-  }
-
-  Future<Position> _getCurrentPosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-    const locationErrorMessage = 'get_weather_error';
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-
-    if (!serviceEnabled) {
-      return Future.error(locationErrorMessage);
-    }
-
-    permission = await Geolocator.checkPermission();
-    final isDeniedForever = permission == LocationPermission.deniedForever;
-    if (isDeniedForever) {
-      return Future.error(locationErrorMessage);
-    }
-
-    final isDenied = permission == LocationPermission.denied;
-    if (isDenied) {
-      permission = await Geolocator.requestPermission();
-    }
-    final isDeniedAgain = permission == LocationPermission.denied;
-    if (isDeniedAgain) {
-      return Future.error(locationErrorMessage);
-    }
-
-    return await Geolocator.getCurrentPosition(
-        timeLimit: const Duration(seconds: 20));
-  }
-
-  Future<Weather> _getWeatherInMyCity(Position position, String locale) async {
-    try {
-      const getWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
-      var response = await _dio.get(
-        getWeatherUrl,
-        queryParameters: {
-          'lang': locale,
-          'lat': position.latitude,
-          'lon': position.longitude,
-          'appid': '18be0426cee1feabd45330eaddb3c3a0',
-          'units': 'metric'
-        },
-      );
-      final json = response.data;
-      return Weather.fromJson(json);
-    } catch (e) {
-      return Future.error('get_weather_error');
     }
   }
 }
